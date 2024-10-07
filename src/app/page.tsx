@@ -40,6 +40,26 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [messages, setMessages] = useState<{ sender: string, text: string }[]>([]); // Messages state
 
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [imageLoading, setImageLoading] = useState(false);
+
+  const generateImage = async () => {
+    setImageLoading(true);
+    setImageUrl(null);
+
+    try {
+      const response = await axios.post('/api/generate-image', {
+        prompt: 'A beautiful morning-themed image with a steaming cup of coffee, a rose, and warm colors. Include coffee beans scattered on the surface and a heart symbol or other gentle decoration to emphasize the friendly and inviting tone.',
+      });
+
+      setImageUrl(response.data.url);
+    } catch (error) {
+      console.error('Error generating image:', error);
+    } finally {
+      setImageLoading(false);
+    }
+  };
+
   const handleSearch = async () => {
     setLoading(true); // Show loading indicator
     const newMessages = [...messages, { sender: 'user', text: `Ieškoma vietų ${purpose?.value} tarp ${address1} ir ${address2}.` }];
@@ -80,11 +100,11 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-blue-100 via-cyan-100 to-blue-200 flex flex-col justify-center items-center p-8 fade-in">
+    <div className="min-h-screen bg-gradient-to-r from-amber-100 via-cyan-100 to-amber-200 flex flex-col justify-center items-center p-8 fade-in">
       {/* Main container with smooth transitions */}
       <main className="bg-white p-8 rounded-lg shadow-lg w-full max-w-4xl">
         {/* Personalized Header */}
-        <h1 className="text-4xl font-extrabold mb-4 text-center text-blue-600">Labas! Rask tobulą vietą savo kitam susitikimui</h1>
+        <h1 className="text-4xl font-extrabold mb-4 text-center text-amber-600">Labas! Rask tobulą vietą savo kitam susitikimui</h1>
         <p className="text-xl text-gray-700 text-center mb-8">Sužinok, kur susitikti pusiaukelėje kavutės, pietų ar vaikų žaidimų aikštelėje.</p>
 
         {/* Purpose Selection */}
@@ -166,11 +186,11 @@ export default function Home() {
         {/* Search Button with Spinner */}
         <div className="mb-6 flex justify-center">
           {loading ? (
-            <div className="spinner-border text-blue-500 animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-600"></div>
+            <div className="spinner-border text-amber-700 animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-amber-600"></div>
           ) : (
             <button
               onClick={handleSearch}
-              className="w-3/4 p-3 bg-blue-500 text-white rounded hover:bg-blue-600 transition ease-in-out duration-300"
+              className="w-3/4 p-3 bg-amber-700 text-white rounded hover:bg-amber-600 transition ease-in-out duration-300"
             >
               Rasti vietas
             </button>
@@ -185,7 +205,7 @@ export default function Home() {
                 href={`https://maps.google.com/?q=place_id:${result.place_id}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-blue-500 hover:underline transition ease-in-out duration-300"
+                className="text-amber-700 hover:underline transition ease-in-out duration-300"
               >
                 <p className="font-semibold">{result.name}</p>
               </a>
@@ -208,7 +228,7 @@ export default function Home() {
                       href={review.author_url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-blue-500 hover:underline"
+                      className="text-amber-700 hover:underline"
                     >
                       {review.author_name}
                     </a>
@@ -220,6 +240,24 @@ export default function Home() {
             </div>
           ))}
         </div>
+        <br /><br /><br /><br /><br />
+
+        <button
+          onClick={generateImage}
+          className="bg-amber-700 text-white px-4 py-2 rounded hover:bg-amber-600 transition"
+          disabled={imageLoading}
+        >
+          {imageLoading ? 'Tuoj, minutėlę...' : 'Noriu kavytės paveikslėlio ☕'}
+        </button>
+        {imageUrl && (
+          <div className="mt-6">
+            <img
+              src={imageUrl}
+              alt="Generated Morning Image"
+              className="max-w-full rounded-lg shadow-lg"
+            />
+          </div>
+        )}
 
       </main>
 
