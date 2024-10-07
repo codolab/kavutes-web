@@ -25,3 +25,17 @@ body {
     text-wrap: balance;
   }
 }
+
+@keyframes colorChange {
+
+  0%,
+  100% {
+    background-color: #D97706;
+    /* amber-700 */
+  }
+
+  50% {
+    background-color: #F59E0B;
+    /* amber-500 */
+  }
+}

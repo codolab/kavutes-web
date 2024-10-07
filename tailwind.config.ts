@@ -12,6 +12,15 @@ const config: Config = {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      animation: {
+        colorChange: 'colorChange 2s infinite ease-in-out',
+      },
+      keyframes: {
+        colorChange: {
+          '0%, 100%': { backgroundColor: '#D97706' }, // amber-700
+          '50%': { backgroundColor: '#F59E0B' }, // amber-500
+        },
+      },
     },
   },
   plugins: [],
