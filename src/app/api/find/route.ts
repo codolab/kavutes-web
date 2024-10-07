@@ -1,4 +1,3 @@
-import OpenAI from 'openai'
 import { CoreMessage, generateText } from 'ai';
 import { openai } from '@ai-sdk/openai';
 

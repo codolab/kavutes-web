@@ -32,8 +32,6 @@ interface Review {
   text: string;
 }
 
-
-
 export default function Home() {
   const [purpose, setPurpose] = useState<{ value?: string } | null>(null);
   const [address1, setAddress1] = useState('');
@@ -82,10 +80,12 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col justify-center items-center p-8">
-      {/* Adjust the main container to be wider */}
+    <div className="min-h-screen bg-gradient-to-r from-blue-100 via-cyan-100 to-blue-200 flex flex-col justify-center items-center p-8 fade-in">
+      {/* Main container with smooth transitions */}
       <main className="bg-white p-8 rounded-lg shadow-lg w-full max-w-4xl">
-        <h1 className="text-2xl font-bold mb-6 text-center text-black">Atrask geriausias susitikimo vietas</h1>
+        {/* Personalized Header */}
+        <h1 className="text-4xl font-extrabold mb-4 text-center text-blue-600">Labas! Rask tobulą vietą savo kitam susitikimui</h1>
+        <p className="text-xl text-gray-700 text-center mb-8">Sužinok, kur susitikti pusiaukelėje kavutės, pietų ar vaikų žaidimų aikštelėje.</p>
 
         {/* Purpose Selection */}
         <div className="mb-4 flex justify-center">
@@ -93,7 +93,7 @@ export default function Home() {
             <ReactSelect
               options={purposes}
               onChange={setPurpose}
-              placeholder="Pasirinkite tikslą"
+              placeholder="Pasirinkite tikslą (arba ne!)"
               className="w-full text-black"
             />
           </div>
@@ -113,7 +113,7 @@ export default function Home() {
                     {...getInputProps({ placeholder: 'Įveskite pirmą adresą' })}
                     className="w-full p-2 border border-gray-300 rounded text-black"
                   />
-                  <div className="bg-white shadow-lg mt-2">
+                  <div className="absolute bg-white shadow-lg mt-1 z-10"> {/* Changed to absolute and z-10 for dropdown positioning */}
                     {loading && <div className="text-center p-2 text-black">Įkeliama...</div>}
                     {suggestions.map(suggestion => (
                       <div
@@ -132,7 +132,7 @@ export default function Home() {
         </div>
 
         {/* Address 2 Autocomplete */}
-        <div className="mb-4 flex justify-center">
+        <div className="mb-4 flex justify-center relative"> {/* Added relative to parent div */}
           <div className="w-3/4">
             <PlacesAutocomplete
               value={address2}
@@ -145,7 +145,7 @@ export default function Home() {
                     {...getInputProps({ placeholder: 'Įveskite antrą adresą' })}
                     className="w-full p-2 border border-gray-300 rounded text-black"
                   />
-                  <div className="bg-white shadow-lg mt-2">
+                  <div className="absolute bg-white shadow-lg mt-1 w-full z-10"> {/* Changed to absolute and z-10 for dropdown positioning */}
                     {loading && <div className="text-center p-2 hover:bg-gray-100 text-black">Įkeliama...</div>}
                     {suggestions.map(suggestion => (
                       <div
@@ -163,41 +163,37 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Search Button */}
+        {/* Search Button with Spinner */}
         <div className="mb-6 flex justify-center">
-          <button
-            onClick={handleSearch}
-            className={`w-3/4 p-3 bg-blue-500 text-white rounded ${loading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-600'}`}
-            disabled={loading}
-          >
-            {loading ? 'Ieškoma vietų...' : 'Rasti vietas'}
-          </button>
+          {loading ? (
+            <div className="spinner-border text-blue-500 animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-600"></div>
+          ) : (
+            <button
+              onClick={handleSearch}
+              className="w-3/4 p-3 bg-blue-500 text-white rounded hover:bg-blue-600 transition ease-in-out duration-300"
+            >
+              Rasti vietas
+            </button>
+          )}
         </div>
 
         {/* Display Results with Maps */}
         <div className="flex flex-wrap justify-center">
           {results.map((result, index) => (
-            <div key={index} className="border p-4 w-1/2 rounded bg-gray-100 mb-4">
-              <p className="font-semibold text-black">{result.name}</p>
-              <p className="text-gray-600">{result.formatted_address}</p>
-
-              <MapComponent address={result.formatted_address} />  {/* Display map for each result */}
-
-
-              {/* Link to Google Maps */}
+            <div key={index} className="border p-4 w-1/2 rounded bg-gray-100 mb-4 fade-in">
               <a
                 href={`https://maps.google.com/?q=place_id:${result.place_id}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-blue-500 hover:underline"
+                className="text-blue-500 hover:underline transition ease-in-out duration-300"
               >
-                View on Google Maps
+                <p className="font-semibold">{result.name}</p>
               </a>
+              <p className="text-gray-600">{result.formatted_address}</p>
 
-              <br></br>
-              <br></br>
+              <MapComponent address={result.formatted_address} />  {/* Display map for each result */}
+              <br /><br />
               <div className="text-gray-600">Ką sako entuziastai:</div>
-
 
               {/* Display user reviews */}
               {result.reviews?.map((review, reviewIndex) => (

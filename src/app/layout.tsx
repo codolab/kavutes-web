@@ -32,7 +32,7 @@ export default function RootLayout({
         {children}
         {/* Load the Google Maps JavaScript API */}
         <Script
-          src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_PLACES_API_KEY}&libraries=places`}
+          src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_PLACES_API_KEY}&libraries=places,marker`}
           strategy="beforeInteractive" // Ensures it loads before your components
         />
       </body>
