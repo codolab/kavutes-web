@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const openaiApiKey = process.env.OPENAI_API_KEY;
 
-export async function POST(req: NextRequest) {
+export async function POST() {
   // const { prompt } = await req.json();
 
   const prompt = "A beautiful photorealistic morning-themed image with a steaming cup of coffee, a rose. The scene should feel cozy and welcoming, with warm colors and details like coffee beans scattered on the surface. Include a heart symbol or other gentle decoration to emphasize the friendly and inviting tone."
