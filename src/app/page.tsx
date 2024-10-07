@@ -200,9 +200,9 @@ export default function Home() {
         </div>
 
         {/* Display Results with Maps */}
-        <div className="flex flex-wrap justify-center">
+        <div className="grid sm:grid-cols-1 lg:grid-cols-2 gap-4 justify-centerflex flex-wrap justify-center">
           {results.map((result, index) => (
-            <div key={index} className="border p-4 w-1/2 rounded bg-gray-100 mb-4 fade-in">
+            <div key={index} className="border p-4 rounded bg-gray-100 mb-4 fade-in">
               <a
                 href={`https://maps.google.com/?q=place_id:${result.place_id}`}
                 target="_blank"
@@ -252,7 +252,7 @@ export default function Home() {
             } text-white px-4 py-2 rounded transition-colors duration-300 ease-in-out`}
           disabled={imageLoading}
         >
-          {imageLoading ? 'Tuoj, minutėlę...' : 'Noriu kavytės paveikslėlio ☕'}
+          {imageLoading ? 'Tuoj, minutėlę...' : 'Noriu kavytės paveikslėlio gerai dienai ☕'}
         </button>
 
         <br />
