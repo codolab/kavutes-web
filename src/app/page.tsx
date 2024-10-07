@@ -105,6 +105,7 @@ export default function Home() {
       {/* Main container with smooth transitions */}
       <main className="bg-white p-8 rounded-lg shadow-lg w-full max-w-4xl">
         {/* Personalized Header */}
+        <br></br>
         <h1 className="text-4xl font-extrabold mb-4 text-center text-amber-600">Labas! Rask tobulą vietą savo kitam susitikimui</h1>
         <p className="text-xl text-gray-700 text-center mb-8">Sužinok, kur susitikti pusiaukelėje kavutės, pietų ar vaikų žaidimų aikštelėje.</p>
 
@@ -131,7 +132,7 @@ export default function Home() {
               {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
                 <div>
                   <input
-                    {...getInputProps({ placeholder: 'Įveskite pirmą adresą' })}
+                    {...getInputProps({ placeholder: 'Įvesk pirmą adresą (pvz. savo namus arba ofisą)' })}
                     className="w-full p-2 border border-gray-300 rounded text-black"
                   />
                   <div className="absolute bg-white shadow-lg mt-1 z-10"> {/* Changed to absolute and z-10 for dropdown positioning */}
@@ -163,7 +164,7 @@ export default function Home() {
               {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
                 <div>
                   <input
-                    {...getInputProps({ placeholder: 'Įveskite antrą adresą' })}
+                    {...getInputProps({ placeholder: 'Įvesk antrą adresą (pvz. draugės namus arba ofisą)' })}
                     className="w-full p-2 border border-gray-300 rounded text-black"
                   />
                   <div className="absolute bg-white shadow-lg mt-1 w-full z-10"> {/* Changed to absolute and z-10 for dropdown positioning */}
@@ -187,7 +188,7 @@ export default function Home() {
         {/* Search Button with Spinner */}
         <div className="mb-6 flex justify-center">
           {loading ? (
-            <div className="spinner-border text-amber-700 animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-amber-600"></div>
+            <div className="spinner-border animate-spin rounded-full h-10 w-10 border-4 border-b-amber-600 border-t-transparent border-l-amber-500 border-r-transparent"></div>
           ) : (
             <button
               onClick={handleSearch}
@@ -254,6 +255,21 @@ export default function Home() {
           {imageLoading ? 'Tuoj, minutėlę...' : 'Noriu kavytės paveikslėlio ☕'}
         </button>
 
+        <br />
+        <br />
+        <br />
+
+        <a
+          href={"https://buy.stripe.com/00g9EcfRS96Vb3qdQQ"}
+          target="_blank"
+          className={`${imageLoading
+            ? "animate-colorChange"
+            : "bg-amber-700 hover:bg-amber-600"
+            } text-white px-4 py-2 rounded transition-colors duration-300 ease-in-out`}
+        >
+          O gal norite nupirkti mums kavos? :)
+        </a>
+
         {imageUrl && (
           <div className="mt-6">
             <Image
@@ -271,7 +287,7 @@ export default function Home() {
       </main>
 
       <footer className="mt-8 text-gray-600 text-sm">
-        Powered by Codo Lab
+        Powered by <a href={"https://www.codolab.com/"}>Codo Lab</a>
       </footer>
     </div>
 
